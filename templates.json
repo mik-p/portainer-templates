@@ -1,1 +1,252 @@
-
+{
+	"version": "2",
+	"templates": [
+		{
+			"type": 1,
+			"title": "Nginx",
+			"description": "High performance web server",
+			"categories": [
+				"webserver"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/nginx.png",
+			"image": "nginx:latest",
+			"ports": [
+				"80/tcp",
+				"443/tcp"
+			],
+			"volumes": [{
+					"container": "/etc/nginx"
+				},
+				{
+					"container": "/usr/share/nginx/html"
+				}
+			]
+		},
+		{
+			"type": 1,
+			"title": "Httpd",
+			"description": "Open-source HTTP server",
+			"categories": [
+				"webserver"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/httpd.png",
+			"image": "httpd:latest",
+			"ports": [
+				"80/tcp"
+			],
+			"volumes": [{
+				"container": "/usr/local/apache2/htdocs/"
+			}]
+		},
+		{
+			"type": 1,
+			"title": "MySQL",
+			"description": "The most popular open-source database",
+			"categories": [
+				"database"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mysql.png",
+			"image": "mysql:latest",
+			"env": [{
+				"name": "MYSQL_ROOT_PASSWORD",
+				"label": "Root password"
+			}],
+			"ports": [
+				"3306/tcp"
+			],
+			"volumes": [{
+				"container": "/var/lib/mysql"
+			}]
+		},
+		{
+			"type": 1,
+			"title": "Mongo",
+			"description": "Open-source document-oriented database",
+			"categories": [
+				"database"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mongo.png",
+			"image": "mongo:latest",
+			"ports": [
+				"27017/tcp"
+			],
+			"volumes": [{
+				"container": "/data/db"
+			}]
+		},
+		{
+			"type": 1,
+			"title": "Minio",
+			"description": "A distributed object storage server built for cloud applications and devops",
+			"categories": [
+				"storage"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/minio.png",
+			"image": "minio/minio:latest",
+			"ports": [
+				"9000/tcp"
+			],
+			"env": [{
+					"name": "MINIO_ACCESS_KEY",
+					"label": "Minio access key"
+				},
+				{
+					"name": "MINIO_SECRET_KEY",
+					"label": "Minio secret key"
+				}
+			],
+			"volumes": [{
+					"container": "/data"
+				},
+				{
+					"container": "/root/.minio"
+				}
+			],
+			"command": "server /data"
+		},
+		{
+			"type": 1,
+			"title": "Plesk",
+			"description": "WebOps platform and hosting control panel",
+			"categories": [
+				"CMS"
+			],
+			"platform": "linux",
+			"note": "Default credentials: admin / changeme",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/plesk.png",
+			"image": "plesk/plesk:latest",
+			"ports": [
+				"21/tcp",
+				"80/tcp",
+				"443/tcp",
+				"8880/tcp",
+				"8443/tcp",
+				"8447/tcp"
+			]
+		},
+		{
+			"type": 1,
+			"title": "Redmine",
+			"description": "Open-source project management tool",
+			"categories": [
+				"project-management"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redmine.png",
+			"image": "redmine:latest",
+			"ports": [
+				"3000/tcp"
+			],
+			"volumes": [{
+				"container": "/usr/src/redmine/files"
+			}]
+		},
+		{
+			"type": 1,
+			"title": "File browser",
+			"description": "A web file manager",
+			"note": "Default credentials: admin/admin",
+			"categories": [
+				"filesystem",
+				"storage"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/filebrowser.png",
+			"image": "filebrowser/filebrowser:latest",
+			"ports": [
+				"80/tcp"
+			],
+			"volumes": [{
+					"container": "/data"
+				},
+				{
+					"container": "/srv"
+				}
+			],
+			"command": "--port 80 --database /data/database.db --root /srv"
+		},
+		{
+			"type": 2,
+			"title": "Portainer Agent",
+			"description": "Manage all the resources in your Swarm cluster",
+			"note": "The agent will be deployed globally inside your cluster and available on port 9001.",
+			"categories": [
+				"portainer"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/portainer.png",
+			"repository": {
+				"url": "https://github.com/portainer/templates",
+				"stackfile": "stacks/portainer-agent/docker-stack.yml"
+			}
+		},
+		{
+			"type": 2,
+			"title": "OpenFaaS",
+			"name": "func",
+			"description": "Serverless functions made simple",
+			"note": "Deploys the API gateway and sample functions. You can access the UI on port 8080. <b>Warning</b>: the name of the stack must be 'func'.",
+			"categories": [
+				"serverless"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/openfaas.png",
+			"repository": {
+				"url": "https://github.com/openfaas/faas",
+				"stackfile": "docker-compose.yml"
+			}
+		},
+		{
+			"type": 2,
+			"title": "Wordpress",
+			"description": "Wordpress setup with a MySQL database",
+			"note": "Deploys a Wordpress instance connected to a MySQL database.",
+			"categories": [
+				"CMS"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+			"repository": {
+				"url": "https://github.com/portainer/templates",
+				"stackfile": "stacks/wordpress/docker-stack.yml"
+			},
+			"env": [{
+				"name": "MYSQL_DATABASE_PASSWORD",
+				"label": "Database root password",
+				"description": "Password used by the MySQL root user."
+			}]
+		},
+		{
+			"type": 3,
+			"title": "Wordpress",
+			"description": "Wordpress setup with a MySQL database",
+			"note": "Deploys a Wordpress instance connected to a MySQL database.",
+			"categories": [
+				"CMS"
+			],
+			"platform": "linux",
+			"logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+			"repository": {
+				"url": "https://github.com/portainer/templates",
+				"stackfile": "stacks/wordpress/docker-compose.yml"
+			},
+			"env": [{
+				"name": "MYSQL_DATABASE_PASSWORD",
+				"label": "Database root password",
+				"description": "Password used by the MySQL root user."
+			}]
+		},
+		{
+	    "type": 4,
+	    "title": "Wordpress",
+	    "description": "Wordpress setup with a MySQL database",
+	    "note": "Deploys a Wordpress instance connected to a MySQL database.",
+	    "stackfile": "https://raw.githubusercontent.com/portainer/templates/master/stacks/wordpress/edge/docker-stack.yml"
+	  }
+	]
+}
