@@ -38,6 +38,9 @@
 			],
 			"volumes": [{
 				"container": "/usr/local/apache2/htdocs/"
+			},
+			{
+				"container": "/usr/local/apache2/conf/httpd.conf"
 			}]
 		},
 		{
